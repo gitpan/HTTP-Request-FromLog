@@ -10,6 +10,9 @@ requires 'HTTP::Headers';
 requires 'Carp';
 
 build_requires 'Test::More';
+build_requires 'YAML';
+build_requires 'Text::CSV_XS';
+
 use_test_base;
 auto_include;
 WriteAll;

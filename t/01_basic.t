@@ -1,20 +1,19 @@
 use strict;
 use warnings;
-use HTTP::Request::FromLog; 
+use HTTP::Request::FromLog;
 use Data::Dumper;
 use YAML;
 use Test::More tests => 4;
-
 
 my @test_data = YAML::Load( join '', <DATA> );
 
 {
     my %conf = ( host => 'localhost', );
     my $log2hr = HTTP::Request::FromLog->new(%conf);
-    for(@test_data){
+    for (@test_data) {
         my $log = $_->{log};
         my $obj;
-        eval( $_->{obj} ); 
+        eval( $_->{obj} );
         my $http_request = $log2hr->convert($log);
         isa_ok( $http_request, 'HTTP::Request' );
         is_deeply( $http_request, $obj, "object is deeply matched" );

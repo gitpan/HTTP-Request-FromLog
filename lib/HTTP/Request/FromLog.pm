@@ -7,7 +7,7 @@ use UNIVERSAL::require;
 
 use 5.8.1;
 
-our $VERSION = '0.00001';
+our $VERSION = '0.00002';
 
 sub new {
     my $class = shift;
@@ -27,8 +27,8 @@ sub _init {
     $class->require or die $@;
 
     my $engine_args = $args->{engine_args} ||= {};
-    $engine_args->{scheme} = $args->{scheme} ||= 'http'; 
-    $engine_args->{host} = $args->{host}; 
+    $engine_args->{scheme} = $args->{scheme} ||= 'http';
+    $engine_args->{host} = $args->{host};
 
     $self->{engine} = $class->new(%$engine_args);
 
@@ -38,10 +38,12 @@ sub convert {
     my $self       = shift;
     my $log_record = shift;
 
-    my $result  = $self->{engine}->parse($log_record);
-    return if(!defined $result);
+    my $result = $self->{engine}->parse($log_record);
+    return if ( !defined $result );
 
-    my $request = HTTP::Request->new( $result->{method}, $result->{uri}, $result->{header} );
+    my $request =
+      HTTP::Request->new( $result->{method}, $result->{uri},
+        $result->{header} );
 
     return $request;
 }

@@ -17,9 +17,9 @@ sub new {
 }
 
 sub parse {
-    my $self = shift;
+    my $self       = shift;
     my $log_record = shift;
-    
+
     my $record = $self->{parser}->parse($log_record);
 
     return undef if all { !defined $_ } values %$record;
@@ -31,7 +31,7 @@ sub parse {
     $header->header( user_agent => $record->{agent} ) if $record->{agent};
     $header->header( referer    => $record->{refer} ) if $record->{refer};
 
-    return( {method => $method, uri => $uri, header => $header} );
+    return ( { method => $method, uri => $uri, header => $header } );
 }
 
 1;

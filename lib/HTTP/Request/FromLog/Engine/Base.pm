@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use Carp ();
 
-sub new { 
+sub new {
     my $class = shift;
     my %args  = @_;
 
@@ -18,13 +18,13 @@ sub _mk_virtual_methods {
         my $slot = "${class}::${method}";
         {
             no strict 'refs';
-            *{$slot} =
-              sub { Carp::croak( ref( $_[0] ) . "::${method} is not overridden" ) };
+            *{$slot} = sub {
+                Carp::croak( ref( $_[0] ) . "::${method} is not overridden" );
+            };
         }
     }
     return ();
 }
-
 
 1;
 
